@@ -4,6 +4,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * 
+ * Interface for model to use
+ * 
+ * @author mthompson31
+ * @author jwells8
+ * 
+ * Copyright (c) 2016 by Jacob Wells and Mitchell Thompson
+ *
+ */
 public interface ContactModelInterface {
 
   void registerObserver(ContactObserver o);

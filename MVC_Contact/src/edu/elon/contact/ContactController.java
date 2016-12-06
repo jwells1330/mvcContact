@@ -13,6 +13,16 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+/**
+ * 
+ * Handles all interaction between view and model
+ * 
+ * @author mthompson31
+ * @author jwells8
+ * 
+ * Copyright (c) 2016 by Jacob Wells and Mitchell Thompson
+ *
+ */
 public class ContactController implements ContactControllerInterface {
 
   ContactModelInterface model;
@@ -29,10 +39,18 @@ public class ContactController implements ContactControllerInterface {
   private boolean defaults = true;
   private Connection conn;
 
+  /**
+   * default constructor
+   */
   public ContactController() {
 
   }
 
+  /**
+   * Creates a new controller object and assigns it a model
+   * 
+   * @param model the model to be used in this controller
+   */
   public ContactController(ContactModelInterface model) {
     this.model = model;
     view = new ContactView(model, this);
@@ -52,6 +70,9 @@ public class ContactController implements ContactControllerInterface {
     view.makeMenu(false);
   }
 
+  /**
+   * creates arrays of text objects for the menus
+   */
   public void createArrays() {
     String text = "First Name";
     labelTextArray1.add(text);
@@ -98,11 +119,17 @@ public class ContactController implements ContactControllerInterface {
     buttonMap.put(text, "doCancel");
   }
 
+  /**
+   * closes the view
+   */
   @Override
   public void closeUI() {
     view.close();
   }
 
+  /**
+   * connects to the database
+   */
   @Override
   public void connect() {
     view.removeButtons();
@@ -124,6 +151,9 @@ public class ContactController implements ContactControllerInterface {
 
   }
 
+  /**
+   * deletes all of the entries in the database
+   */
   @Override
   public void clearDB() {
     try {
@@ -137,6 +167,9 @@ public class ContactController implements ContactControllerInterface {
     }
   }
 
+  /**
+   * resets buttons
+   */
   @Override
   public void add() {
     for (int i = 0; i < fieldTextArray1.size(); i++) {
@@ -153,6 +186,9 @@ public class ContactController implements ContactControllerInterface {
     view.makeButton(button, buttonMap.get(button), BorderLayout.LINE_END);
   }
 
+  /**
+   * updates contacts based on current text field values
+   */
   @Override
   public void edit() {
     ArrayList<String> info = new ArrayList<String>();
@@ -168,6 +204,9 @@ public class ContactController implements ContactControllerInterface {
     }
   }
 
+  /**
+   * tells the model to delete specific contact entry
+   */
   @Override
   public void remove() {
     ArrayList<String> info = new ArrayList<String>();
@@ -182,6 +221,9 @@ public class ContactController implements ContactControllerInterface {
     }
   }
 
+  /**
+   * Does the database connection
+   */
   public void doConnection() {
     defaults = false;
     for (int i = 0; i < 5; i++) {
@@ -213,6 +255,9 @@ public class ContactController implements ContactControllerInterface {
     }
   }
 
+  /**
+   * tells the model to display the next entry in the database
+   */
   @Override
   public void doNext() {
     try {
@@ -223,6 +268,9 @@ public class ContactController implements ContactControllerInterface {
 
   }
 
+  /**
+   * tells the model to display the previous entry in the database
+   */
   @Override
   public void doPrevious() {
     try {
@@ -233,6 +281,9 @@ public class ContactController implements ContactControllerInterface {
 
   }
 
+  /**
+   * tells the model to add a new entry to the database
+   */
   @Override
   public void doAdd() {
     ArrayList<String> info = new ArrayList<String>();
@@ -256,7 +307,9 @@ public class ContactController implements ContactControllerInterface {
     }
 
   }
-
+  /**
+   * tells the model to cancel current action
+   */
   @Override
   public void doCancel() {
     view.removeButtons();

@@ -8,12 +8,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * the contact model implements the database and other functional features of the application
+ * such as registering observers.
+ * 
+ * @author mthompson31
+ * @author jwells8
+ * 
+ * Copyright (c) 2016 by Jacob Wells and Mitchell Thompson
+ * 
+ * @version 1.0
+ *
+ */
 public class ContactModel implements ContactModelInterface {
 
   ArrayList<ContactObserver> contactObservers = new ArrayList<ContactObserver>();
   ArrayList<String> defaultDBInfo = new ArrayList<String>();
   ArrayList<String> info;
 
+  /**
+   * adds info for database upon instantiation
+   */
   public ContactModel() {
     defaultDBInfo.add("root");
     defaultDBInfo.add("Tw0C0ins");
@@ -21,11 +36,17 @@ public class ContactModel implements ContactModelInterface {
     defaultDBInfo.add("contactBook");
     defaultDBInfo.add("contact");
   }
-
+  
+  /**
+   * returns a String ArrayList representing parameters like address of database/password
+   */
   public ArrayList<String> getDBInfo() {
     return defaultDBInfo;
   }
 
+  /**
+   * 
+   */
   @Override
   public void registerObserver(ContactObserver o) {
     contactObservers.add(o);
@@ -45,7 +66,9 @@ public class ContactModel implements ContactModelInterface {
     }
   }
 
-  // creates connection to sql database
+  /**
+   * creates connection to sql database
+   */
   public Connection connectToDatabase(String connString, String userName, String passWord) throws SQLException {
 
     Connection conn = null;
@@ -55,6 +78,9 @@ public class ContactModel implements ContactModelInterface {
 
   }
 
+  /**
+   * displays the first entry in the database upon opening application
+   */
   public void displayFirst(Connection conn) throws SQLException {
     Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
     ResultSet rs = stmt.executeQuery("SELECT * FROM contact");
@@ -73,6 +99,9 @@ public class ContactModel implements ContactModelInterface {
 
   }
 
+  /**
+   * iterates and displays subsequent entries in database
+   */
   @Override
   public void displayNext(Connection conn, String email) throws SQLException {
     Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -101,6 +130,9 @@ public class ContactModel implements ContactModelInterface {
     stmt.close();
   }
 
+  /**
+   * iterates and displays previous entries in database
+   */
   @Override
   public void displayPrevious(Connection conn, String email) throws SQLException {
     Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -130,6 +162,9 @@ public class ContactModel implements ContactModelInterface {
 
   }
 
+  /**
+   * deletes all entries in the database
+   */
   @Override
   public void deleteAll(Connection conn) throws SQLException {
     Statement stmt = conn.createStatement();
@@ -137,6 +172,9 @@ public class ContactModel implements ContactModelInterface {
     stmt.close();
   }
 
+  /**
+   * creates a new database entry
+   */
   @Override
   public void createNew(Connection conn, ArrayList<String> contactInfo) throws SQLException {
     String statement = "INSERT INTO contact (FirstName, MiddleName, LastName, Email, Major) VALUES" + "(?,?,?,?,?)";
@@ -152,6 +190,9 @@ public class ContactModel implements ContactModelInterface {
 
   }
 
+  /**
+   * deletes a specific entry from the contact database
+   */
   @Override
   public void deleteContact(Connection conn, ArrayList<String> contactInfo) throws SQLException {
     String sql = "DELETE FROM contact WHERE email = ?";
@@ -182,6 +223,9 @@ public class ContactModel implements ContactModelInterface {
 
   }
 
+  /**
+   * updates a specific entry in the contact database
+   */
   @Override
   public void updateContact(Connection conn, ArrayList<String> contactInfo) throws SQLException {
     String sql = "UPDATE contact set FirstName = ?, MiddleName = ?, LastName = ?, Email = ?, Major = ?"

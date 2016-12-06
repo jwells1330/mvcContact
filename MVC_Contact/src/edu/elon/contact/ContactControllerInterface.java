@@ -2,6 +2,17 @@ package edu.elon.contact;
 
 import java.awt.event.ActionEvent;
 
+
+/**
+ * 
+ * Interface for controller to use
+ * 
+ * @author mthompson31
+ * @author jwells8
+ * 
+ * Copyright (c) 2016 by Jacob Wells and Mitchell Thompson
+ *
+ */
 public interface ContactControllerInterface {
 
   public void createArrays();
